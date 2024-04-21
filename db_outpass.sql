@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 12:01 AM
+-- Generation Time: Apr 21, 2024 at 02:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,35 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_admin` (
   `admin_id` int(11) NOT NULL,
-  `admin_name` varchar(100) NOT NULL,
-  `admin_email` varchar(100) NOT NULL,
-  `admin_password` varchar(100) NOT NULL
+  `admin_name` varchar(30) NOT NULL,
+  `admin_email` varchar(30) NOT NULL,
+  `admin_password` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `tbl_assign`
+-- Dumping data for table `tbl_admin`
 --
 
-CREATE TABLE `tbl_assign` (
-  `assign_id` int(11) NOT NULL,
-  `assign_date` varchar(100) NOT NULL,
-  `warden_id` int(11) NOT NULL,
-  `hostel_id` int(11) NOT NULL,
-  `guard_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_batch`
---
-
-CREATE TABLE `tbl_batch` (
-  `batch_id` int(11) NOT NULL,
-  `batch_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `tbl_admin` (`admin_id`, `admin_name`, `admin_email`, `admin_password`) VALUES
+(1, 'Admin', 'admin@gmail.com', 'admin@123');
 
 -- --------------------------------------------------------
 
@@ -67,23 +49,12 @@ CREATE TABLE `tbl_batch` (
 
 CREATE TABLE `tbl_complaint` (
   `complaint_id` int(11) NOT NULL,
-  `complaint_date` varchar(100) NOT NULL,
-  `complaint_details` varchar(100) NOT NULL,
-  `complaint_reply` varchar(100) NOT NULL DEFAULT 'Not Yet Replied',
-  `complaint_status` int(11) NOT NULL DEFAULT 0,
-  `student_id` int(11) NOT NULL,
-  `complaint_reply_date` varchar(10) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_course`
---
-
-CREATE TABLE `tbl_course` (
-  `course_id` int(11) NOT NULL,
-  `course_name` varchar(100) NOT NULL
+  `complaint_title` varchar(30) NOT NULL,
+  `complaint_content` varchar(25) NOT NULL,
+  `complaint_status` varchar(30) NOT NULL DEFAULT '0',
+  `complaint_reply` varchar(30) NOT NULL DEFAULT 'Not Yet Replyed',
+  `complaint_date` varchar(25) NOT NULL DEFAULT '0',
+  `student_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -94,7 +65,7 @@ CREATE TABLE `tbl_course` (
 
 CREATE TABLE `tbl_district` (
   `district_id` int(11) NOT NULL,
-  `district_name` varchar(100) NOT NULL
+  `district_name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -104,16 +75,15 @@ CREATE TABLE `tbl_district` (
 --
 
 CREATE TABLE `tbl_guard` (
-  `guard_id` int(11) NOT NULL,
-  `guard_name` varchar(100) NOT NULL,
-  `guard_contact` varchar(100) NOT NULL,
-  `guard_address` varchar(100) NOT NULL,
-  `guard_photo` varchar(100) NOT NULL,
-  `guard_proof` varchar(100) NOT NULL,
-  `guard_doj` date NOT NULL DEFAULT current_timestamp(),
-  `place_id` int(11) NOT NULL,
-  `guard_email` varchar(100) NOT NULL,
-  `guard_password` varchar(100) NOT NULL
+  `guard_id` int(25) NOT NULL,
+  `guard_name` varchar(30) NOT NULL,
+  `guard_contact` varchar(25) NOT NULL,
+  `guard_email` varchar(25) NOT NULL,
+  `guard_address` varchar(30) NOT NULL,
+  `guard_password` varchar(30) NOT NULL,
+  `guard_doj` varchar(30) NOT NULL,
+  `warden_id` int(11) NOT NULL,
+  `hostel_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -125,13 +95,7 @@ CREATE TABLE `tbl_guard` (
 CREATE TABLE `tbl_hostel` (
   `hostel_id` int(11) NOT NULL,
   `hostel_name` varchar(100) NOT NULL,
-  `hostel_contact` varchar(100) NOT NULL,
-  `hostel_address` varchar(100) NOT NULL,
-  `hostel_details` varchar(100) NOT NULL,
-  `hostel_photo` varchar(100) NOT NULL,
-  `hostel_doj` date NOT NULL DEFAULT current_timestamp(),
-  `hostel_email` varchar(100) NOT NULL,
-  `hostel_password` varchar(100) NOT NULL
+  `warden_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -161,7 +125,6 @@ CREATE TABLE `tbl_outpass` (
   `outpass_date` varchar(100) NOT NULL,
   `outpass_for_date` varchar(100) NOT NULL,
   `outpass_for_time` varchar(100) NOT NULL,
-  `outpass_requested_return_time` varchar(100) NOT NULL,
   `outpass_return_time` varchar(100) NOT NULL,
   `outpass_reason` varchar(100) NOT NULL,
   `outpass_status` int(11) NOT NULL DEFAULT 0,
@@ -176,45 +139,8 @@ CREATE TABLE `tbl_outpass` (
 
 CREATE TABLE `tbl_place` (
   `place_id` int(11) NOT NULL,
-  `place_name` varchar(100) NOT NULL,
+  `place_name` varchar(30) NOT NULL,
   `district_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_room`
---
-
-CREATE TABLE `tbl_room` (
-  `room_id` int(11) NOT NULL,
-  `room_no` int(11) NOT NULL,
-  `room_occupancy` int(11) NOT NULL,
-  `hostel_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_room_assign`
---
-
-CREATE TABLE `tbl_room_assign` (
-  `assign_id` int(11) NOT NULL,
-  `assign_date` varchar(100) NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_semester`
---
-
-CREATE TABLE `tbl_semester` (
-  `semester_id` int(11) NOT NULL,
-  `semester_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -225,16 +151,16 @@ CREATE TABLE `tbl_semester` (
 
 CREATE TABLE `tbl_student` (
   `student_id` int(11) NOT NULL,
-  `student_name` varchar(100) NOT NULL,
-  `student_contact` varchar(100) NOT NULL,
-  `student_parent_contact` varchar(100) NOT NULL,
-  `student_address` varchar(100) NOT NULL,
-  `student_photo` varchar(100) NOT NULL,
-  `student_doj` date NOT NULL DEFAULT current_timestamp(),
+  `student_name` varchar(30) NOT NULL,
+  `student_contact` varchar(30) NOT NULL,
+  `student_email` varchar(30) NOT NULL,
+  `student_address` varchar(30) NOT NULL,
+  `student_photo` varchar(30) NOT NULL,
+  `student_password` varchar(40) NOT NULL,
+  `student_doj` varchar(20) NOT NULL,
+  `student_status` varchar(30) NOT NULL DEFAULT '0',
   `place_id` int(11) NOT NULL,
-  `student_email` varchar(100) NOT NULL,
-  `student_parent_email` varchar(100) NOT NULL,
-  `student_password` varchar(100) NOT NULL
+  `hostel_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -245,15 +171,12 @@ CREATE TABLE `tbl_student` (
 
 CREATE TABLE `tbl_warden` (
   `warden_id` int(11) NOT NULL,
-  `warden_name` varchar(100) NOT NULL,
-  `warden_contact` varchar(100) NOT NULL,
-  `warden_address` varchar(100) NOT NULL,
-  `warden_photo` varchar(100) NOT NULL,
-  `warden_proof` varchar(100) NOT NULL,
-  `warden_doj` date NOT NULL DEFAULT current_timestamp(),
-  `place_id` int(11) NOT NULL,
-  `warden_email` varchar(100) NOT NULL,
-  `warden_password` varchar(100) NOT NULL
+  `warden_name` varchar(30) NOT NULL,
+  `warden_contact` varchar(30) NOT NULL,
+  `warden_email` varchar(30) NOT NULL,
+  `warden_address` varchar(30) NOT NULL,
+  `warden_password` varchar(20) NOT NULL,
+  `warden_doj` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -267,28 +190,10 @@ ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`admin_id`);
 
 --
--- Indexes for table `tbl_assign`
---
-ALTER TABLE `tbl_assign`
-  ADD PRIMARY KEY (`assign_id`);
-
---
--- Indexes for table `tbl_batch`
---
-ALTER TABLE `tbl_batch`
-  ADD PRIMARY KEY (`batch_id`);
-
---
 -- Indexes for table `tbl_complaint`
 --
 ALTER TABLE `tbl_complaint`
   ADD PRIMARY KEY (`complaint_id`);
-
---
--- Indexes for table `tbl_course`
---
-ALTER TABLE `tbl_course`
-  ADD PRIMARY KEY (`course_id`);
 
 --
 -- Indexes for table `tbl_district`
@@ -327,24 +232,6 @@ ALTER TABLE `tbl_place`
   ADD PRIMARY KEY (`place_id`);
 
 --
--- Indexes for table `tbl_room`
---
-ALTER TABLE `tbl_room`
-  ADD PRIMARY KEY (`room_id`);
-
---
--- Indexes for table `tbl_room_assign`
---
-ALTER TABLE `tbl_room_assign`
-  ADD PRIMARY KEY (`assign_id`);
-
---
--- Indexes for table `tbl_semester`
---
-ALTER TABLE `tbl_semester`
-  ADD PRIMARY KEY (`semester_id`);
-
---
 -- Indexes for table `tbl_student`
 --
 ALTER TABLE `tbl_student`
@@ -364,19 +251,7 @@ ALTER TABLE `tbl_warden`
 -- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbl_assign`
---
-ALTER TABLE `tbl_assign`
-  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbl_batch`
---
-ALTER TABLE `tbl_batch`
-  MODIFY `batch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_complaint`
@@ -385,22 +260,16 @@ ALTER TABLE `tbl_complaint`
   MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tbl_course`
---
-ALTER TABLE `tbl_course`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
 -- AUTO_INCREMENT for table `tbl_district`
 --
 ALTER TABLE `tbl_district`
-  MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_guard`
 --
 ALTER TABLE `tbl_guard`
-  MODIFY `guard_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `guard_id` int(25) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_hostel`
@@ -424,25 +293,7 @@ ALTER TABLE `tbl_outpass`
 -- AUTO_INCREMENT for table `tbl_place`
 --
 ALTER TABLE `tbl_place`
-  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `tbl_room`
---
-ALTER TABLE `tbl_room`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbl_room_assign`
---
-ALTER TABLE `tbl_room_assign`
-  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbl_semester`
---
-ALTER TABLE `tbl_semester`
-  MODIFY `semester_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_student`
